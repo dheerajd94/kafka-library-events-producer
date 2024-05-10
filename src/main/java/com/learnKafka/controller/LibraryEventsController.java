@@ -30,18 +30,22 @@ public class LibraryEventsController {
             @RequestBody @Valid LibraryEvent libraryEvent
     ) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent......... : {} ",libraryEvent);
+        LibraryEvent libraryEvent1 = libraryEvent.withLibraryEventType(LibraryEventType.NEW);
         //invoke the kafka producer
         //...............preferred Asynchronous..........................
-         //libraryEventsProducer.sendLibraryEvent(libraryEvent);
+         libraryEventsProducer.sendLibraryEvent(libraryEvent);
+//        LibraryEvent libraryEvent1 = new LibraryEvent(libraryEvent.libraryEventId(),
+//                LibraryEventType.NEW,
+//                libraryEvent.book());
 
         //----------------Synchronous....................................
-         libraryEventsProducer.sendLibraryEvent_approach2(libraryEvent);
+         //libraryEventsProducer.sendLibraryEvent_approach2(libraryEvent1);
 
         //...............Asynchronous.......................... ........
         //libraryEventsProducer.sendLibraryEvent_approach3(libraryEvent); //Asynchronous
 
         log.info("After Sending libraryEvent");
-        return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent1);
     }
 
     @PutMapping("/v1/libraryevent")
