@@ -54,7 +54,7 @@ public class LibraryEventsController {
     ) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent......... : {} ",libraryEvent);
         LibraryEvent libraryEvent1 = libraryEvent.withLibraryEventType(LibraryEventType.UPDATE);
-        ResponseEntity<String> BAD_REQUEST = getStringResponseEntity(libraryEvent);
+        ResponseEntity<String> BAD_REQUEST = getStringResponseEntity(libraryEvent1);
         if (BAD_REQUEST != null) return BAD_REQUEST;
 
         libraryEventsProducer.sendLibraryEvent_approach2(libraryEvent1);
